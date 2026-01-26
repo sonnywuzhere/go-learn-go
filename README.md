@@ -22,13 +22,16 @@ Top options:
 
 And if you need a coding conditional statment to aid in your decision making, look no further:
 
-'''
+```
 if (cheap && easy) {
-  pick(VS Code) // https://code.visualstudio.com/
+	pick(VS Code)
+	// https://code.visualstudio.com/
 } else if (!cheap && fancy) {
-  pick(GoLand) // https://www.jetbrains.com/go/
+	pick(GoLand)
+	// https://www.jetbrains.com/go/
 } else if (nerdy && uglyWebsite) {
-  pick(Vim) // https://www.vim.org/
+	pick(Vim)
+	// https://www.vim.org/
 } else {
   try {
     askAI()
@@ -36,7 +39,7 @@ if (cheap && easy) {
     askGoogle()
   }
 }
-'''
+```
 
 ### Hello, world! program (a classic) 
 
