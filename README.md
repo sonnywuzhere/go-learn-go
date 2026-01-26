@@ -1,6 +1,7 @@
 # Go Learn Go
-If you've ever wanted to learn Go, now's your time to go for it! If you want the official tutorial from the Go documentation, 
-head on over to https://go.dev/learn/
+If you've ever wanted to learn Go, now's your time to go for it! 
+
+If you want the official tutorial from the Go documentation, head on over to https://go.dev/learn/
 
 But if you're looking for a fun alternative, then you're in the right place. 
 
@@ -9,8 +10,9 @@ But if you're looking for a fun alternative, then you're in the right place.
 In order to dive into the exciting world of Go, we first need to do all the boring (but important) stuff...
 
 ### Installation 
-Go to https://go.dev/doc/install and click the big blue button that says "Download". Make sure you have the corrent operating 
-system selected (Linux, Mac, Windows), otherwise you'll have a sad day. 
+Go to https://go.dev/doc/install and click the big blue button that says "Download". 
+Make sure you have the correct operating system selected (Linux, Mac, Windows), 
+otherwise you'll have a sad day. 
 
 ### Programming Environment 
 Pick your favorite IDE (integrated development environment), since Go doesn't need anything super fancy. 
@@ -45,11 +47,12 @@ if (cheap && easy) {
 
 Now to get to the good stuff: actually running code! 
 
-Once you have Go downloaded successfully, create a file with a .go extension. Open it in your IDE of choice. 
+Once you have Go downloaded successfully, create a file with a .go extension. 
+Open it in your IDE of choice. 
 It's time to write your first Hello, world! program in Go!
 
 (the following code is from the Go documentation: https://go.dev/doc/tutorial/getting-started)
-
+```
 package main
 
 import "fmt"
@@ -58,17 +61,18 @@ func main() {
 	fmt.Println("Hello, world!")
 	fmt.Println("This program is written in Go")
 }
-
-
+```
 ### Running programs 
 
 Great, you have your Go program sitting on your computer doing absolutely nothing. 
 Let's change that. 
 
-Open a terminal (either in your IDE or separately) and enter the following: 
+Open a terminal (either in your IDE or separately) and enter the following commands.
 
-go run fileName.go
-
+It will look like this (with yourFileName.go changed to your actual file name)
+```
+go run yourFileName.go
+```
 This should print 
 
 Hello, world!
@@ -81,8 +85,11 @@ If you get an error, retrace the steps to double check your work and try again.
 https://www.w3schools.com/go/go_comments.php
 
 Comments are written in Go with two forward slashes for single line comments
-
+```
 // this would be a comment in Go 
-
+```
+```
 /* this is also a comment in Go 
-and it is a multi-line comment */
+it looks a bit different because
+it's a multi-line comment */
+```
