@@ -22,6 +22,7 @@ Top options:
 
 And if you need a coding conditional statment to aid in your decision making, look no further:
 
+'''
 if (cheap && easy) {
   pick(VS Code) // https://code.visualstudio.com/
 } else if (!cheap && fancy) {
@@ -35,6 +36,7 @@ if (cheap && easy) {
     askGoogle()
   }
 }
+'''
 
 ### Hello, world! program (a classic) 
 
