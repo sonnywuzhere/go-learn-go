@@ -57,4 +57,4 @@
    Some of the built-in complex data types are Maps (like dictionaries in Python), Structs,
    Interfaces, Slices, Arrays, and Pointers
 
-   See the step1-dataTypes Go code for more details on each of these
+   See the [step1-dataTypes Go code](https://github.com/sonnywuzhere/go-learn-go/blob/main/step1-dataTypes/dataTypes.go) for more details on each of these
