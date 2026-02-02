@@ -13,6 +13,7 @@ But if you're looking for a fun alternative, then you're in the right place.
 Learning Go
 
 [Step 0](https://github.com/sonnywuzhere/go-learn-go/blob/main/step0-hello_world/step0.md)
+-> [Example Code](https://github.com/sonnywuzhere/go-learn-go/blob/main/step0-hello_world/hello_world.go)
 
 [Step 1](https://github.com/sonnywuzhere/go-learn-go/blob/main/step1-dataTypes/dataTypes.md)
 -> [Example Code](https://github.com/sonnywuzhere/go-learn-go/blob/main/step1-dataTypes/dataTypes.go)
