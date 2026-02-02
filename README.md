@@ -16,3 +16,6 @@ Learning Go
 
 [Step 1](https://github.com/sonnywuzhere/go-learn-go/blob/main/step1-dataTypes/dataTypes.md)
 -> [Example Code](https://github.com/sonnywuzhere/go-learn-go/blob/main/step1-dataTypes/dataTypes.go)
+
+[Step 2](https://github.com/sonnywuzhere/go-learn-go/blob/main/step2-if.else%2C%20etc./ifElse.md)
+-> [Example Code](https://github.com/sonnywuzhere/go-learn-go/blob/main/step2-if.else%2C%20etc./ifElse.go)
