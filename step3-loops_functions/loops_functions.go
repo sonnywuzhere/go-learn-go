@@ -8,6 +8,20 @@ import (
 func main() {
 	fmt.Println("Hello loops and functions!")
 
+	teaData := [11]string{
+		"Refresh Mint Biologique,Tazo", 
+		"Earl Grey Biologique,Tazo",
+		"Joy,Tazo",
+		"Pumpkin Spice Chai,Tazo",
+		"Glazed Lemon Loaf,Tazo",
+		"Passion,Tazo",
+		"Green Ginger,Tazo",
+		"Peachy Green,Tazo",
+		"Vanilla Caramel Chai,Tazo",
+		"Vanilla Bean Macaron,Tazo",
+		"Chai,Tazo",
+	}
+
 	// Loops in Go 
 	// https://go.dev/tour/flowcontrol/1
 
@@ -26,6 +40,18 @@ func main() {
 		fmt.Println("Order up!")
 		teaInventory--
 	}
+
+	// the for keyword can also be used as a for each loop 
+	// this uses the range keyword and loops through 
+	// can be used to loop through each element in a list
+	// https://golangtutorial.dev/tips/foreach-loop-go/
+	for index, element := range teaData {
+		fmt.Println(index, element)
+	}
+
+	// Go doesn't have a do-while loop, but you can do some tricks
+	// to turn the for loop into one 
+	// https://gosamples.dev/do-while/
 
 	// if for some strange reason, you want a compact 
 	// infinte loop without having True be the condition, 
@@ -50,19 +76,6 @@ func main() {
 	listTea()
 	recursiveTea(4)
 	
-	teaData := [11]string{
-		"Refresh Mint Biologique,Tazo", 
-		"Earl Grey Biologique,Tazo",
-		"Joy,Tazo",
-		"Pumpkin Spice Chai,Tazo",
-		"Glazed Lemon Loaf,Tazo",
-		"Passion,Tazo",
-		"Green Ginger,Tazo",
-		"Peachy Green,Tazo",
-		"Vanilla Caramel Chai,Tazo",
-		"Vanilla Bean Macaron,Tazo",
-		"Chai,Tazo",
-	}
 	teaName, teaBrand := splittingTea(teaData[3])
 	fmt.Println("The tea flavor is", teaName, "and the brand is", teaBrand)
 
