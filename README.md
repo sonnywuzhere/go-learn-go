@@ -20,3 +20,9 @@ Learning Go
 
 [Step 2](https://github.com/sonnywuzhere/go-learn-go/blob/main/step2-if.else%2C%20etc./ifElse.md)
 -> [Example Code](https://github.com/sonnywuzhere/go-learn-go/blob/main/step2-if.else%2C%20etc./ifElse.go)
+
+[Step 3](https://github.com/sonnywuzhere/go-learn-go/blob/main/step3-loops_functions/loops_functions.md)
+-> [Example Code](https://github.com/sonnywuzhere/go-learn-go/blob/main/step3-loops_functions/loops_functions.go)
+
+[Step 4](https://github.com/sonnywuzhere/go-learn-go/blob/main/step4-classes_inheritance/classes_inheritance.go)
+-> [Example Code](https://github.com/sonnywuzhere/go-learn-go/blob/main/step4-classes_inheritance/classes_inheritance.md)
