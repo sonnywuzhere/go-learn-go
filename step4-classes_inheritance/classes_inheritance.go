@@ -4,10 +4,15 @@ import (
 	"fmt"
 )
 
-// https://www.geeksforgeeks.org/go-language/class-and-object-in-golang/
 // Go doesn't have classes, but it has some other ways of
 // creating class-ish structures
 // The first one is the struct (structures)
+// This creates a structure/blueprint with fields that
+// groups these attributes together
+// https://www.geeksforgeeks.org/go-language/class-and-object-in-golang/
+
+// For example, we can create a Tea struct with different
+// things we'd want to keep track of about the tea
 type Tea struct {
 	flavor string 
 	brand string 
@@ -17,6 +22,8 @@ type Tea struct {
 
 // Inheritance (ish)
 // Go doesn't have inheritance, but it does allow embedding of structs 
+// which means you can put a struct as a field of a struct (kind of meta)
+// Here, we create a TeaShop struct and embed the Tea struct within this
 type TeaShop struct {
 	name string 
 	location string 
@@ -24,16 +31,17 @@ type TeaShop struct {
 	Tea 
 }
 
-// func (ts *TeaShop) String() string {
-// 	return fmt.Println("")
-// }
- 
-// a convention in Go is that interface names must end in "er"
-type TS interface {
+// Go also has interfaces, which are blueprints like structs 
+// but they are for methods (or the behavior )
+// a convention in Go is that interface names ends in "er"
+// and matches the name of a struct to help you keep track
+// of what goes with what (at least that's the theory)
+type TeaShoper interface {
 	Steep()
 	ProcessOrder()
 }
 
+// You initialize the methods in functions outside of the interface
 func (t TeaShop) Steep() {
 	fmt.Println("The steep time for your", t.flavor, "is", t.steepTime, "minutes")
 }
@@ -43,21 +51,8 @@ func (t TeaShop) ProcessOrder() {
 	fmt.Println("Thanks for stopping by", t.name)
 }
 
-// https://www.geeksforgeeks.org/go-language/embedding-interfaces-in-golang/
-type TeaShopDetailer interface {
-	TeaShop
-}
 
-type Point struct {
-	x int
-	y int
-}
-
-func (p *Point) String() string {
-	return fmt.Sprintf("Pointy y is %d", p.y)
-}
-
-// to custom format printing out a struct as a string, 
+// To custom format printing out a struct as a string, 
 // you declare a function that takes in the struct as an 
 // argument, but specifically the pointer (so add the * before 
 // the name of your struct). Then you use the String() method in Go.
@@ -71,7 +66,7 @@ func (t *Tea) String() string {
 	// https://www.geeksforgeeks.org/go-language/fmt-sprintf-function-in-golang-with-examples/
 	// The Sprintf() function in Go is a way to format strings when printing 
 	// You use %s for a string, %d for an integer, %f for a float 
-	return fmt.Sprintf("%s's %s is $%f", t.brand, t.flavor, t.price)
+	return fmt.Sprintf("%s's %s, Price $%f", t.brand, t.flavor, t.price)
 }
 
 func main() {
@@ -88,11 +83,6 @@ func main() {
 			price: 4.00,
 		},
 	}
-
-	// This prints out our TeaShop (note the nice formatting
-	// thanks to our fancy function above)
-	fmt.Println("Testing")
-	fmt.Println(myTeaShop)
 
 	// Test out our steep and process order from our interface 
 	myTeaShop.Steep()
@@ -117,24 +107,24 @@ func main() {
 	// so we can access the memory address (remember pass by reference?)
 	// this is when that comes in handy.
 
-	myNextTeaOrder := &Tea {
+	myActualTeaOrder := &Tea {
 		flavor: "Chai Latte",
 		brand: "Tazo",
 		steepTime: 4.0,
 		price: 4.75,
    	}
 
-	fmt.Println("My next tea order is: ", myNextTeaOrder)
+	fmt.Println("My next tea order is: ", myActualTeaOrder)
+
+	// What if you want to change the flavor of your tea order? 
+	// We use what's called dot notation, where you use your 
+	// struct with your attribute following a .
+	// Then you can reasign your attributes
+	myActualTeaOrder.flavor = "Strawberry Matcha Latte"
+	myActualTeaOrder.steepTime = 1.0
+	myActualTeaOrder.price = 7.84
+
+	// When we print out our order, it will be updated now
+	fmt.Println("My updated tea order is: ", myActualTeaOrder)
 
 }
-
-
-
-
-// ● Create an object (a Person object like the one we created in lab is fine)
-// ● Give the object class attributes (aka instance variables)
-// ● Give the object functions
-// ● Create an object that inherits from the first object (e.g., Student) with some attributes
-// and functions of its own
-// ● Test how to instantiate both types of objects, call their functions, and modify their
-// variables.
