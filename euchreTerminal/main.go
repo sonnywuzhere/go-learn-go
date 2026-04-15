@@ -7,100 +7,115 @@ import (
 
 func main() {
 	fmt.Println("\nWelcome to the Euchre game: Terminal edition!")
+
+
+	// TODO: prompt players to enter in name 
+
+	var player1Name = "Sonny Joon"
+	var player2Name = "Alice"
+	var player3Name = "Nancy Drew"
+	var player4Name = "Bob"
+
+	var team1TotalPoints int
+	var team2TotalPoints int 
 	
-	var deck = createDeck()
-	var shuffledDeck = shuffleDeck(deck)
+	// a full game is to play until one team gets 10 points 
+	for team1TotalPoints < 10 && team2TotalPoints < 10 {
 
-	// TODO: vary the dealer (player1) so it's not always the same
-	var player1Hand, player2Hand, player3Hand, player4Hand, blind = dealCards(shuffledDeck)
+		var deck = createDeck()
+		var shuffledDeck = shuffleDeck(deck)
 
-	// name, team, bidder, tricksTaken, playerHand
-	// player1 is the dealer
-	var player1 = Player{"Sonny Joon", 0, false, 0, player1Hand}
-	var player2 = Player{"Alice", 1, false, 0, player2Hand}
-	var player3 = Player{"Nancy Drew", 0, false, 0, player3Hand}
-	var player4 = Player{"Bob", 1, false, 0, player4Hand}
+		// TODO: vary the dealer (player1) so it's not always the same
+		var player1Hand, player2Hand, player3Hand, player4Hand, blind = dealCards(shuffledDeck)
 
-	var players = [4]Player{player1, player2, player3, player4}
+		// name, team, bidder, tricksTaken, playerHand
+		// player1 is the dealer
+		var player1 = Player{player1Name, 0, false, 0, player1Hand}
+		var player2 = Player{player2Name, 1, false, 0, player2Hand}
+		var player3 = Player{player3Name, 0, false, 0, player3Hand}
+		var player4 = Player{player4Name, 1, false, 0, player4Hand}
 
-	// the result of bidding is to select trump suit
-	// the first card of the blind is "turned up" to decide on bidding
-	var selectedTrump, playerWhoBid = bidding(player1, player2, player3, player4, blind[0])
+		var players = [4]Player{player1, player2, player3, player4}
 
-	fmt.Println("\n", playerWhoBid.name, "bid!")
+		// the result of bidding is to select trump suit
+		// the first card of the blind is "turned up" to decide on bidding
+		var selectedTrump, playerWhoBid = bidding(player1, player2, player3, player4, blind[0])
 
-	// update player who bid data
-	for j, player := range players {
-		if player.name == playerWhoBid.name {
-			players[j] = playerWhoBid
+		fmt.Println("\n", playerWhoBid.name, "bid!")
+
+		// update player who bid data
+		for j, player := range players {
+			if player.name == playerWhoBid.name {
+				players[j] = playerWhoBid
+			}
 		}
-	}
 
-	// have player1 (dealer) replace card they picked up 
-	fmt.Println("\n", player1.name, "what card would you like to replace for the", &blind[0], "?")
-	fmt.Println("1, 2, 3...")
-	fmt.Println(player1.playerHand)
-	var replaceCard int
-	fmt.Scan(&replaceCard)
-	for i := 0; i < 4; i++ {
-		if i == replaceCard {
-			player1.playerHand[i - 1] = blind[0]
-		}
-	}
-	fmt.Println("\n", player1.name, "your hand is now", player1.playerHand)
-
-	// cards updated to reflect trump card's values
-	players[0].playerHand, players[1].playerHand, players[2].playerHand, players[3].playerHand = updateCardTrumpValues(selectedTrump, player1Hand, player2Hand, player3Hand, player4Hand)
-
-	// player to the left of the dealer leads first trick
-	playerWhoLeads := players[1]
-	
-	var cardsOnTable [4]Card
-	var whoPlayed [4]Player
-
-	// loop for one "round" (playing all cards) - 5
-	for i := 0; i < 5; i++ {
-		fmt.Println(playerWhoLeads, "leads")
-		// loop for one trick (each player plays a card) - 4
+		// have player1 (dealer) replace card they picked up 
+		fmt.Println("\n", player1.name, "what card would you like to replace for the", &blind[0], "?")
+		fmt.Println("1, 2, 3...")
+		fmt.Println(player1.playerHand)
+		var replaceCard int
+		fmt.Scan(&replaceCard)
 		for i := 0; i < 4; i++ {
-			fmt.Println("\n", playerWhoLeads.name, "'s turn")
-			playedCard, updatedPlayerHand := playCard(playerWhoLeads)
-			playerWhoLeads.playerHand = [5]Card(updatedPlayerHand)
+			if i == replaceCard {
+				player1.playerHand[i - 1] = blind[0]
+			}
+		}
+		fmt.Println("\n", player1.name, "your hand is now", player1.playerHand)
 
-			// loop through players to update hand data 
-			for i, player := range players {
-				if playerWhoLeads.name == player.name {
-					players[i].playerHand = playerWhoLeads.playerHand
+		// cards updated to reflect trump card's values
+		players[0].playerHand, players[1].playerHand, players[2].playerHand, players[3].playerHand = updateCardTrumpValues(selectedTrump, player1Hand, player2Hand, player3Hand, player4Hand)
+
+		// player to the left of the dealer leads first trick
+		indexOfWhoLeads := 1
+	
+		// loop for one "round" (playing all cards) - 5
+		for x := 0; x < 5; x++ {
+			var cardsOnTable = make(map[Card]Player)
+			// loop for one trick (each player plays a card) - 4
+			for i := 0; i < 4; i++ {
+				
+				fmt.Println("\n", players[indexOfWhoLeads].name, "'s turn")
+				var playedCard Card
+				playedCard, players[indexOfWhoLeads].playerHand = playCard(players[indexOfWhoLeads])
+		
+				cardsOnTable[playedCard] = players[indexOfWhoLeads]
+		
+				fmt.Println("\n", players[indexOfWhoLeads].name, "played a ", playedCard)
+				fmt.Println("\n", players[indexOfWhoLeads].name, "hand", players[indexOfWhoLeads].playerHand)
+		
+				fmt.Println("\nCards on table: ", cardsOnTable)
+	
+				indexOfWhoLeads = (indexOfWhoLeads + 1) % 4
+			}
+			
+			// determine who took the trick
+			whoTookTrick := takeTrick(cardsOnTable, selectedTrump)
+	
+			for y, player := range players {
+				if player.name == whoTookTrick.name {
+					players[y] = whoTookTrick
+					// the person who took the trick becomes the new leader 
+					indexOfWhoLeads = y
 				}
 			}
 	
-			cardsOnTable[i] = playedCard
-			whoPlayed[i] = playerWhoLeads
-	
-			fmt.Println("\n", playerWhoLeads.name, "played a ", playedCard)
-			fmt.Println("\n", playerWhoLeads.name, "hand", updatedPlayerHand)
-	
-			fmt.Println("\nCards on table: ", cardsOnTable)
-			playerWhoLeads = players[(i + 2) % 4]
 		}
-		// determine who took the trick
-		var whoTookTrick = takeTrick(cardsOnTable, whoPlayed, selectedTrump)
-		playerWhoLeads = whoTookTrick
 
-		// loop through players and update player data who took trick 
-		for i, player := range players {
-			if player.name == whoTookTrick.name {
-				players[i].tricksTaken++
-			}
-		}
+		// end of round (all cards have been played)
+		t1, t2 := endOfRound(players)
+		team1TotalPoints += t1 
+		team2TotalPoints += t2
+
+		fmt.Println("\nHere are the results of the end of the first round")
+		fmt.Println("\nTeam 0:", team1TotalPoints)
+		fmt.Println("Team1:", team2TotalPoints)
 	}
 
-	for i, player := range players {
-		fmt.Println(i, player)
-	}
-	// end of round (all cards have been played)
-	endOfRound(players)
 
+	var whoWon = endOfGame(team1TotalPoints, team2TotalPoints)
+	fmt.Println(whoWon)
+	fmt.Println("Thanks for playing the Euchre terminal!")
 
 }
 
@@ -129,6 +144,10 @@ type Player struct {
 	bidder bool 
 	tricksTaken int
 	playerHand [5]Card
+}
+
+func (p *Player) String() string {
+	return fmt.Sprintf("%s", p.name)
 }
 
 
@@ -366,11 +385,23 @@ func dealCards(shuffledDeck [24]Card) ([5]Card, [5]Card, [5]Card, [5]Card, [4]Ca
 // if trump was played, the highest trump card takes the trick 
 // if no trump was played, the highest matching suit of the led card takes the trick
 // adds to tricksTaken 
-func takeTrick(cards [4]Card, players [4]Player, trumpSuit string) (Player) {
+func takeTrick(cardsOnTable map[Card]Player, trumpSuit string) (Player) {
 	fmt.Println()
-	fmt.Println("players coming in: ", players)
+	fmt.Println("data coming in: ", cardsOnTable)
 	fmt.Println()
+
+	var players [4]Player
+	var cards [4]Card
 	var playerWhoTookTrick Player
+
+	// unpack map into separate arrays
+	for i := 0; i < 4; i++ {
+		for k, v := range cardsOnTable {
+			cards[i] = k
+			players[i] = v
+		}
+	}
+
 	leadingCardSuit := cards[0].suit
 
 	var filteredCards []Card
@@ -406,12 +437,16 @@ func takeTrick(cards [4]Card, players [4]Player, trumpSuit string) (Player) {
 // if the team that bid took all the tricks, they get 2 points
 // if the team that bid didn't take all the tricks, they only get 1 point ("held to one")
 // otherwise, the team that didn't bid gets a point (the other team got "euched") 
-func endOfRound(players [4]Player) {
+func endOfRound(players [4]Player) (int, int) {
 	var team1Points int 
 	var team2Points int 
 	var teamWhoBid int 
 	var teamWhoWon int
 	var teamWhoWonFullPoints bool
+
+	var pointsForTeam1 int 
+	var pointsForTeam2 int 
+
 	for i, player := range players {
 		if player.bidder {
 			teamWhoBid = player.team % 2
@@ -440,21 +475,50 @@ func endOfRound(players [4]Player) {
 		}
 	} 
 
+	// see if the team who bid ended up winning
 	if teamWhoBid == teamWhoWon {
 		// check to see if they got all the points 
 		if teamWhoWonFullPoints {
 			fmt.Println("You got 2 points!")
+			if teamWhoWon == 0 {
+				pointsForTeam1 = 2
+			} else {
+				pointsForTeam2 = 2
+			}
 		} else {
 			fmt.Println(teamWhoWon, "got held to 1 point!")
 			fmt.Println("held 'em to 1!")
+			if teamWhoWon == 0 {
+				pointsForTeam1 = 1 
+			} else {
+				pointsForTeam2 = 1
+			}
 		}
+	// the team who bid did not win 
 	} else {
 		fmt.Println(teamWhoBid, "got euched!")
 		fmt.Println("The other team gets a point")
+		// the team opposite to the team who bid gets points 
+		if teamWhoBid == 0 {
+			pointsForTeam2 = 1
+		} else {
+			pointsForTeam1 = 1
+		}
 	}
 
+	return pointsForTeam1, pointsForTeam2
 }
 
+func endOfGame(team1Points int, team2Points int) (string) {
+	var whoWon string 
+
+	if team1Points > team2Points {
+		whoWon = "Team 0 won!"
+	} else {
+		whoWon = "Team 1 won!"
+	}
+	return whoWon 
+}
 
 // Milestones: 
 // Level 0: player functionality in terminal 
