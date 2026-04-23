@@ -8,13 +8,31 @@ import (
 func main() {
 	fmt.Println("\nWelcome to the Euchre game: Terminal edition!")
 
+	var player1Name string = "Bob"
+	var player2Name string = "Alice"
+	var player3Name string = "Drew"
+	var player4Name string = "Joon"
 
-	// TODO: prompt players to enter in name 
+	// commenting out for easier testing
+	// fmt.Print("Player 1, enter your name: ")
+	// fmt.Scan(&player1Name)
+	// fmt.Print("Player 2, enter your name: ")
+	// fmt.Scan(&player2Name)
+	// fmt.Print("Player 3, enter your name: ")
+	// fmt.Scan(&player3Name)
+	// fmt.Print("Player 4, enter your name: ")
+	// fmt.Scan(&player4Name)
+	// fmt.Println()
 
-	var player1Name = "Sonny Joon"
-	var player2Name = "Alice"
-	var player3Name = "Nancy Drew"
-	var player4Name = "Bob"
+	fmt.Println("Here are our players and teams: ")
+
+	fmt.Println("Player 1 (Dealer)", player1Name)
+	fmt.Println("Player 2", player2Name)
+	fmt.Println("Player 3", player3Name)
+	fmt.Println("Player 4", player4Name)
+
+	fmt.Println("Team 0: ", player1Name, "and", player3Name)
+	fmt.Println("Team 1: ", player2Name, "and", player4Name)
 
 	var team1TotalPoints int
 	var team2TotalPoints int 
@@ -36,6 +54,8 @@ func main() {
 		var player4 = Player{player4Name, 1, false, 0, player4Hand}
 
 		var players = [4]Player{player1, player2, player3, player4}
+
+		fmt.Println("\nThe start of a new round!")
 
 		// the result of bidding is to select trump suit
 		// the first card of the blind is "turned up" to decide on bidding
@@ -71,7 +91,8 @@ func main() {
 	
 		// loop for one "round" (playing all cards) - 5
 		for x := 0; x < 5; x++ {
-			var cardsOnTable = make(map[Card]Player)
+			var cardsOnTable [4]Card
+			var playersWhoPlayed [4]Player
 			// loop for one trick (each player plays a card) - 4
 			for i := 0; i < 4; i++ {
 				
@@ -79,18 +100,26 @@ func main() {
 				var playedCard Card
 				playedCard, players[indexOfWhoLeads].playerHand = playCard(players[indexOfWhoLeads])
 		
-				cardsOnTable[playedCard] = players[indexOfWhoLeads]
+				cardsOnTable[i] = playedCard
+				playersWhoPlayed[i] = players[indexOfWhoLeads]
 		
 				fmt.Println("\n", players[indexOfWhoLeads].name, "played a ", playedCard)
 				fmt.Println("\n", players[indexOfWhoLeads].name, "hand", players[indexOfWhoLeads].playerHand)
 		
-				fmt.Println("\nCards on table: ", cardsOnTable)
-	
+				fmt.Println("\nCards on table: ")
+				for z := range i + 1 {
+					fmt.Printf("%s played by %s", cardsOnTable[z].String(), playersWhoPlayed[z].name)
+					fmt.Println()
+				}
+				
+				fmt.Println()
+				fmt.Println(selectedTrump, "is trump")
+
 				indexOfWhoLeads = (indexOfWhoLeads + 1) % 4
 			}
 			
 			// determine who took the trick
-			whoTookTrick := takeTrick(cardsOnTable, selectedTrump)
+			whoTookTrick := takeTrick(cardsOnTable, playersWhoPlayed, selectedTrump)
 	
 			for y, player := range players {
 				if player.name == whoTookTrick.name {
@@ -126,6 +155,16 @@ type Card struct {
 	suit string 
 	value int 
 	isTrump bool
+}
+
+// constructor with default values 
+func NewCard() *Card {
+	return &Card{
+		rank: "",
+		suit: "",
+		value: 0,
+		isTrump: false,
+	}
 }
 
 // "pretty print" Card info
@@ -239,14 +278,14 @@ func bidding(player1 Player, player2 Player, player3 Player, player4 Player, bid
 
 	// bid first on the top facing card 
 	for j, player := range players {
-		fmt.Println("\n", player.name, ":your turn to bid or pass")
+		fmt.Println("\n", player.name, ": your turn to bid or pass")
 		fmt.Println("Here are your cards", player.playerHand)
 		fmt.Scan(&bidOrPass)
 
 		if bidOrPass == "bid" {
 			// this is for the scenario of the dealer's partner 
 			// telling the dealer to pick it up
-			if j == 2 {
+			if j == 1 {
 				fmt.Println("Pick it up!")
 			}
 			player.bidder = true
@@ -385,22 +424,9 @@ func dealCards(shuffledDeck [24]Card) ([5]Card, [5]Card, [5]Card, [5]Card, [4]Ca
 // if trump was played, the highest trump card takes the trick 
 // if no trump was played, the highest matching suit of the led card takes the trick
 // adds to tricksTaken 
-func takeTrick(cardsOnTable map[Card]Player, trumpSuit string) (Player) {
-	fmt.Println()
-	fmt.Println("data coming in: ", cardsOnTable)
-	fmt.Println()
+func takeTrick(cards [4]Card, players [4]Player, trumpSuit string) (Player) {
 
-	var players [4]Player
-	var cards [4]Card
 	var playerWhoTookTrick Player
-
-	// unpack map into separate arrays
-	for i := 0; i < 4; i++ {
-		for k, v := range cardsOnTable {
-			cards[i] = k
-			players[i] = v
-		}
-	}
 
 	leadingCardSuit := cards[0].suit
 
@@ -409,7 +435,7 @@ func takeTrick(cardsOnTable map[Card]Player, trumpSuit string) (Player) {
 
 	for i, card := range cards {
 		if card.suit == leadingCardSuit || card.suit == trumpSuit {
-			filteredCards = append(filteredCards, card)
+			filteredCards = append(filteredCards, cards[i])
 			filteredPlayers = append(filteredPlayers, players[i])
 		}
 	}
@@ -422,9 +448,7 @@ func takeTrick(cardsOnTable map[Card]Player, trumpSuit string) (Player) {
 		}
 	}
 
-	fmt.Println("trump", trumpSuit)
-	fmt.Println("cards", filteredCards)
-	fmt.Println("players", filteredPlayers)
+	fmt.Println()
 	fmt.Println(filteredPlayers[index].name, "took the trick!")
 	playerWhoTookTrick = filteredPlayers[index]
 	playerWhoTookTrick.tricksTaken++
