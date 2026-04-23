@@ -13,16 +13,16 @@ func main() {
 	var player3Name string = "Drew"
 	var player4Name string = "Joon"
 
-	// commenting out for easier testing
-	// fmt.Print("Player 1, enter your name: ")
-	// fmt.Scan(&player1Name)
-	// fmt.Print("Player 2, enter your name: ")
-	// fmt.Scan(&player2Name)
-	// fmt.Print("Player 3, enter your name: ")
-	// fmt.Scan(&player3Name)
-	// fmt.Print("Player 4, enter your name: ")
-	// fmt.Scan(&player4Name)
-	// fmt.Println()
+	// comment out for easier testing
+	fmt.Print("Player 1, enter your name: ")
+	fmt.Scan(&player1Name)
+	fmt.Print("Player 2, enter your name: ")
+	fmt.Scan(&player2Name)
+	fmt.Print("Player 3, enter your name: ")
+	fmt.Scan(&player3Name)
+	fmt.Print("Player 4, enter your name: ")
+	fmt.Scan(&player4Name)
+	fmt.Println()
 
 	fmt.Println("Here are our players and teams: ")
 
