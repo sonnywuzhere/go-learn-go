@@ -544,8 +544,3 @@ func endOfGame(team1Points int, team2Points int) (string) {
 	return whoWon 
 }
 
-// Milestones: 
-// Level 0: player functionality in terminal 
-// Level 1: frontend built with Wails & Go code integrated (but still local functionality)
-// Level 2: multi-player functionality (Scocket.io?) 
-// Level 3: Deployed code 
