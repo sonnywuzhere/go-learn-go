@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"math/rand/v2"
 )
 
 // App struct
@@ -24,4 +25,14 @@ func (a *App) startup(ctx context.Context) {
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
+}
+
+func (a *App) RandomIndices()( int, int, int, int, int ){
+	randNum1 := rand.IntN(24)
+	randNum2 := rand.IntN(24)
+	randNum3 := rand.IntN(24)
+	randNum4 := rand.IntN(24)
+	randNum5 := rand.IntN(24)
+	fmt.Println(randNum1)
+	return randNum1, randNum2, randNum3, randNum4, randNum5
 }

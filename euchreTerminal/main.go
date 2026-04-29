@@ -8,12 +8,11 @@ import (
 func main() {
 	fmt.Println("\nWelcome to the Euchre game: Terminal edition!")
 
-	var player1Name string = "Bob"
-	var player2Name string = "Alice"
-	var player3Name string = "Drew"
-	var player4Name string = "Joon"
+	var player1Name string
+	var player2Name string 
+	var player3Name string
+	var player4Name string
 
-	// comment out for easier testing
 	fmt.Print("Player 1, enter your name: ")
 	fmt.Scan(&player1Name)
 	fmt.Print("Player 2, enter your name: ")

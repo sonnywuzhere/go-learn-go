@@ -3,20 +3,34 @@ import "./App.css";
 
 import { useEffect } from "react";
 
-import Clubs10 from "./assets/cardImages/10 of Clubs.png";
-import DiamondsJ from "./assets/cardImages/Jack of Diamonds.png";
-import CardBack from "./assets/cardImages/back.png";
-import DiamondsA from "./assets/cardImages/Ace of Diamonds.png";
-import HeartsK from "./assets/cardImages/King of Hearts.png";
+import gameMusic from "./assets/songs/High Stakes, Low Voices.wav";
 
-import { OnFileDrop } from "../wailsjs/runtime";
+import GameTable from "./assets/images/vecteezy_green-casino-poker-table-texture-game-background_24232274.jpg";
+
+import PlayerHand from "./components/PlayerHand";
+
+// import { RandomIndices } from "../wailsjs/go/main/App";
+
+// import { OnFileDrop } from "../wailsjs/runtime";
 
 function App() {
-  const card1 = Clubs10;
-  const card2 = DiamondsJ;
-  const card3 = DiamondsA;
-  const card4 = HeartsK;
-  const card5 = CardBack;
+  // let card1,
+  //   card2,
+  //   card3,
+  //   card4,
+  //   card5 = RandomIndices();
+
+  function play() {
+    new Audio(gameMusic).play();
+  }
+
+  const gameTableStyle = {
+    backgroundImage: `url(${GameTable})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: "400px",
+    width: "100%",
+  };
 
   useEffect(() => {
     console.log("this ran");
@@ -30,25 +44,16 @@ function App() {
         </div>
         <div>
           <h1>Welcome to the Euchre Game</h1>
+          <button onClick={play}>Play game music</button>
         </div>
       </section>
 
-      <section id="center">
-        <div className="game-table">Game table</div>
+      <section id="center" style={gameTableStyle}>
+        <div className="game-table"></div>
       </section>
 
       <section id="next-steps">
-        {/* Player hand */}
-        <div>
-          {/* Five cards */}
-          <div>
-            <img src={card1} className="base" width="75" alt=""></img>
-            <img src={card2} className="base" width="75" alt=""></img>
-            <img src={card3} className="base" width="75" alt=""></img>
-            <img src={card4} className="base" width="75" alt=""></img>
-            <img src={card5} className="base" width="75" alt=""></img>
-          </div>
-        </div>
+        <PlayerHand index1={0} index2={18} index3={8} index4={23} index5={13} />
       </section>
 
       <div className="ticks"></div>
